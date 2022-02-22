@@ -29,7 +29,6 @@ const constructInteraction = (intercept, testTitle) => {
   }
 }
 export const constructPactFile = (intercept, testTitle, content) => {
-  console.log('intercept', intercept)
   const pactSkeletonObject = {
     consumer: { name: Cypress.env('PACT_CONSUMER') || 'consumer' },
     provider: { name: Cypress.env('PACT_PROVIDER') || 'provider' },
