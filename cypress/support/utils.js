@@ -4,7 +4,7 @@ export const formatAlias = (alias) => {
   if (Array.isArray(alias)) {
     return [...alias].map((a) => `@${a}`)
   }
-  return `@${alias}`
+  return [`@${alias}`]
 }
 
 export const writePact = (filePath, intercept, testCaseTitle) => {
