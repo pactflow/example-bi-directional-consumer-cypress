@@ -4,7 +4,19 @@ export const formatAlias = (alias) => {
   if (Array.isArray(alias)) {
     return [...alias].map((a) => `@${a}`)
   }
-  return `@${alias}`
+  return [`@${alias}`]
+}
+
+export const writePact = (filePath, intercept, testCaseTitle) => {
+  cy.task('readFileMaybe', filePath).then((content) => {
+    if (content) {
+      const data = constructPactFile(intercept, testCaseTitle, JSON.parse(content))
+      cy.writeFile(filePath, JSON.stringify(data))
+    } else {
+      const data = constructPactFile(intercept, testCaseTitle)
+      cy.writeFile(filePath, JSON.stringify(data))
+    }
+  })
 }
 
 const constructInteraction = (intercept, testTitle) => {
@@ -29,7 +41,6 @@ const constructInteraction = (intercept, testTitle) => {
   }
 }
 export const constructPactFile = (intercept, testTitle, content) => {
-  console.log('intercept', intercept)
   const pactSkeletonObject = {
     consumer: { name: Cypress.env('PACT_CONSUMER') || 'consumer' },
     provider: { name: Cypress.env('PACT_PROVIDER') || 'provider' },
