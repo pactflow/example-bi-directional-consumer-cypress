@@ -36,24 +36,17 @@ To be able to run some of the commands locally, you will need to export the foll
 * `PACT_PROVIDER=pactflow-example-provider-postman`: ... Postman (https://github.com/pactflow/example-provider-postman)
 * `PACT_PROVIDER=pactflow-example-provider-restassured`: ... Rest Assured (https://github.com/pactflow/example-provider-restassured)
 ### Usage
-
-#### Pact use case
-
-* `make test` - run the pact test locally
-* `make fake_ci_cypress` - run the Cypress CI process locally
-
 #### Use case with Cypress
 
-NOTE: The cypress are already in the project, in the `./cypress` directory, see below for how to start cypress test and generate consumer contract
+NOTE: The cypress are already in the project, in the `./cypress` directory. Cypress tests are located in `./cypress/integration`.See below for how to start cypress test, generate consumer contract and publish contract to pactflow.
 
 * `make test_cypress` - run cypress test locally
 * `make fake_ci_cypress` - run the nock version of the CI process locally
 
 *How to use Cypress*
 
+* Spin up the ui project by running `npm run start`
 * Define your pact provider and consumer name at `cypress.json` as cypress environment variables
-
 * You can stubbed your network request and response with `cy.intecept`, and record network call to a consumer driven contract with `cy.usePactWait`. 
-
 * `npm run cypress:headless:chrome` - this will run cypress e2e test in headless mode, and write stubbed network calls a pact file 
 * `npm run cypress:run` - this will run cypress e2e test with browser ui
