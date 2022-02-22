@@ -1,11 +1,5 @@
-import { uniqBy } from 'lodash'
+import { uniqBy, reverse } from 'lodash'
 
-const constructHeadersForPact = (headers) => {
-  return {
-    authorization: headers.authorization,
-    'content-type': headers['content-type']
-  }
-}
 const constructInteraction = (intercept, testTitle) => {
   const path = new URL(intercept.request.url).pathname
   const search = new URL(intercept.request.url).search
@@ -16,13 +10,13 @@ const constructInteraction = (intercept, testTitle) => {
     request: {
       method: intercept.request.method,
       path: path,
-      headers: constructHeadersForPact(intercept.request.headers),
+      headers: intercept.request.headers,
       body: intercept.request.body,
       query: query
     },
     response: {
       status: intercept.response.statusCode,
-      headers: constructHeadersForPact(intercept.response.headers),
+      headers: intercept.response.headers,
       body: intercept.response.body
     }
   }
@@ -42,7 +36,7 @@ export const constructPactFile = (intercept, testTitle, content) => {
 
   if (content) {
     const interactions = [...content.interactions, constructInteraction(intercept, testTitle)]
-    const nonDuplicatesInteractions = uniqBy(interactions, 'description')
+    const nonDuplicatesInteractions = reverse(uniqBy(reverse(interactions), 'description'))
     const data = {
       ...pactSkeletonObject,
       ...content,
