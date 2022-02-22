@@ -7,7 +7,7 @@ Cypress.Commands.add('usePactWait', (alias) => {
   const consumerName = Cypress.env('PACT_PROVIDER') || 'provider'
   const filePath = `cypress/pacts/${providerName}-${consumerName}.json`
   if (formattedAlias.length > 1) {
-    cy.wait([formattedAlias]).spread((...intercepts) => {
+    cy.wait([...formattedAlias]).spread((...intercepts) => {
       intercepts.forEach((intercept, index) => {
         writePact(filePath, intercept, `${testCaseTitle}-${formattedAlias[index]}`)
       })
