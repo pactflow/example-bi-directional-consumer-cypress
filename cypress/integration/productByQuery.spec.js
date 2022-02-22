@@ -1,6 +1,6 @@
 const productResponse = require('../fixtures/products.json')
 
-describe('product page', () => {
+describe('products page with query', () => {
   beforeEach(() => {
     cy.intercept(
       {
@@ -21,7 +21,6 @@ describe('product page', () => {
 
   it.only('displays product item by query', () => {
     cy.usePactWait('getProductById')
-
     cy.get('.product-item').its('length').should('eq', 3)
   })
 })

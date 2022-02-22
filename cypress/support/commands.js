@@ -1,7 +1,8 @@
-import { constructPactFile } from './utils'
+import { constructPactFile, formatAlias } from './utils'
 
 Cypress.Commands.add('usePactWait', (alias) => {
-  cy.wait(`@${alias}`).then((response) => {
+  const formattedAlias = formatAlias(alias)
+  cy.wait(formattedAlias).then((response) => {
     const testCaseTitle = Cypress.currentTest.title
     const providerName = Cypress.env('PACT_CONSUMER') || 'consumer'
     const consumerName = Cypress.env('PACT_PROVIDER') || 'provider'

@@ -18,7 +18,10 @@ describe('products page', () => {
   })
 
   it('displays products', () => {
-    cy.usePactWait('getProducts')
     cy.get('.product-item').its('length').should('eq', 3)
+  })
+
+  after(() => {
+    cy.usePactWait(['getProducts'])
   })
 })

@@ -1,5 +1,12 @@
 import { uniqBy, reverse } from 'lodash'
 
+export const formatAlias = (alias) => {
+  if (Array.isArray(alias)) {
+    return [...alias].map((a) => `@${a}`)
+  }
+  return `@${alias}`
+}
+
 const constructInteraction = (intercept, testTitle) => {
   const path = new URL(intercept.request.url).pathname
   const search = new URL(intercept.request.url).search
@@ -22,7 +29,7 @@ const constructInteraction = (intercept, testTitle) => {
   }
 }
 export const constructPactFile = (intercept, testTitle, content) => {
-    console.log('intercept', intercept)
+  console.log('intercept', intercept)
   const pactSkeletonObject = {
     consumer: { name: Cypress.env('PACT_CONSUMER') || 'consumer' },
     provider: { name: Cypress.env('PACT_PROVIDER') || 'provider' },
