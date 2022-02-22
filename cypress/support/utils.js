@@ -7,6 +7,18 @@ export const formatAlias = (alias) => {
   return `@${alias}`
 }
 
+export const writePact = (filePath, intercept, testCaseTitle) => {
+  cy.task('readFileMaybe', filePath).then((content) => {
+    if (content) {
+      const data = constructPactFile(intercept, testCaseTitle, JSON.parse(content))
+      cy.writeFile(filePath, JSON.stringify(data))
+    } else {
+      const data = constructPactFile(intercept, testCaseTitle)
+      cy.writeFile(filePath, JSON.stringify(data))
+    }
+  })
+}
+
 const constructInteraction = (intercept, testTitle) => {
   const path = new URL(intercept.request.url).pathname
   const search = new URL(intercept.request.url).search
