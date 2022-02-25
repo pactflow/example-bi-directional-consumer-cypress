@@ -1,4 +1,4 @@
-# Example BDC Consumer with cypress
+# Example Cypress Consumer
 
 This is an example of a React consumer using Cypress to demonstrate the bi-directional contract testing capability of [Pactflow](https://pactflow.io).
 
