@@ -37,6 +37,10 @@ To be able to run some of the commands locally, you will need to export the foll
 
 NOTE: Cypress tests are located in `./cypress/integration`. See below for how to start cypress test, generate consumer contract and publish contract to pactflow.
 
+- Spin up the ui project by running `npm run start`
+
+then
+
 - `make test_cypress` - run cypress test locally
 - `make fake_ci_cypress` - emulate the CI process locally
 
@@ -50,10 +54,14 @@ _How to use Cypress_
 
 ### FAQ
 
+
+#### 1. Do this work with `cy.route`?
+
+TBC
+
 #### 2. Can I use this with a standard Pact verification?
 
 No, you should not do this. This example doesn't support matching rules (meaning tests will be brittle), and the lack of specificity and control over the various testing states will lead to a lot of [pain](https://pactflow.io/blog/a-disastrous-tale-of-ui-testing-with-pact/).
 
 See https://github.com/pactflow/example-bdc-consumer-cypress for an example repository that shows how to use Pact+Cypress effectively.
 
-#### 1. Do this work with `cy.route`?
