@@ -59,7 +59,7 @@ test: .env
 	@echo "\n========== STAGE: test (pact) ==========\n"
 
 test_cypress: .env
-	@echo "\n========== STAGE: test (nock) ==========\n"
+	@echo "\n========== STAGE: test (cypress) ==========\n"
 	npm run cypress:headless:chrome
 
 
