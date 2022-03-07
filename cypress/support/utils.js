@@ -1,5 +1,21 @@
-import { uniqBy, reverse } from 'lodash'
+import { uniqBy, reverse, omit } from 'lodash'
 
+const OMITTED_AUTOGEN_CYPRESS_HEADERS = ['access-control-expose-headers', 
+  'access-control-allow-credentials', 
+  'host',
+  'proxy-connection',
+  'sec-ch-ua',
+  'sec-ch-ua-mobile',
+  'user-agent',
+  'sec-ch-ua-platform',
+  'origin',
+  'sec-fetch-site',
+  'sec-fetch-mode',
+  'sec-fetch-dest',
+  'referer',
+  'accept-encoding',
+  'accept-language'
+]
 export const formatAlias = (alias) => {
   if (Array.isArray(alias)) {
     return [...alias].map((a) => `@${a}`)
@@ -23,23 +39,25 @@ const constructInteraction = (intercept, testTitle) => {
   const path = new URL(intercept.request.url).pathname
   const search = new URL(intercept.request.url).search
   const query = new URLSearchParams(search).toString()
+
   return {
     description: testTitle,
     providerState: '',
     request: {
       method: intercept.request.method,
       path: path,
-      headers: intercept.request.headers,
+      headers: omit(intercept.request.headers, OMITTED_AUTOGEN_CYPRESS_HEADERS),
       body: intercept.request.body,
       query: query
     },
     response: {
       status: intercept.response.statusCode,
-      headers: intercept.response.headers,
+      headers: omit(intercept.response.headers, OMITTED_AUTOGEN_CYPRESS_HEADERS),
       body: intercept.response.body
     }
   }
 }
+
 export const constructPactFile = (intercept, testTitle, content) => {
   const pactSkeletonObject = {
     consumer: { name: Cypress.env('PACT_CONSUMER') || 'consumer' },
