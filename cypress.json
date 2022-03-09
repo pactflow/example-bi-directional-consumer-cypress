@@ -1,6 +1,6 @@
 {
     "env": {
-        "PACT_PROVIDER": "pactflow-example-provider-dredd",
-        "PACT_CONSUMER": "cypress-example-consumer"
+        "headersBlocklist": ["ignore-me-globally"],
+        "ignoreDefaultBlocklist": false
     }
 }

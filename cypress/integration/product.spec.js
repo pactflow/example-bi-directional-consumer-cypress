@@ -13,7 +13,7 @@ describe('product page', () => {
         headers: { 'access-control-allow-origin': '*' }
       },
     ).as('getProduct')
-
+    cy.setupPact('cypress-example-consumer', 'pactflow-example-provider-dredd')
     cy.visit('http://localhost:3000/products/09')
   })
 

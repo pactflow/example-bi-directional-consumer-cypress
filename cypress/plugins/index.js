@@ -16,16 +16,9 @@
 /**
  * @type {Cypress.PluginConfig}
  */
-const fs = require('fs')
-
-// eslint-disable-next-line no-unused-vars
-module.exports = (on, config) => {
-  on('task', {
-    readFileMaybe(filename) {
-      if (fs.existsSync(filename)) {
-        return fs.readFileSync(filename, 'utf8')
-      }
-      return null
-    }
-  })
-}
+ const pactCypressPlugin = require('@pactflow/pact-cypress-adaptor/dist/plugin')
+ const fs = require('fs')
+ 
+ module.exports = (on, config) => {
+   pactCypressPlugin(on, config, fs)
+ }
