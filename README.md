@@ -1,6 +1,6 @@
 # Example Cypress Consumer
 
-This is an example of a React consumer using Cypress to demonstrate the bi-directional contract testing capability of [Pactflow](https://pactflow.io).
+This is an example of a React consumer using Cypress to demonstrate the bi-directional contract testing capability of [Pactflow](https://pactflow.io). 
 
 It implements a "Product" website. You can see the [Provider](https://github.com/pactflow/example-pactflow-example-provider-dredd) counterpart (see below for other compatible example providers).
 
@@ -13,6 +13,8 @@ Unlike with Pact, the provider does not need to replay any tests to ensure it re
 When you run the CI pipeline (see below for doing this), the pipeline should perform the following activities (simplified):
 
 ![Consumer Pipeline](docs/consumer-pipeline.png 'Consumer Pipeline')
+
+**Note:** Check out branch [use-pact-cypress-adaptor](https://github.com/pactflow/example-bdc-consumer-cypress/tree/use-pact-cypress-adaptor) to leverage [pact-cypress-adaptor package](https://www.npmjs.com/package/@pactflow/pact-cypress-adaptor) for bi-directional contract testing.
 
 ### Pre-requisites
 
