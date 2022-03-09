@@ -4,16 +4,6 @@ This is an example of a React consumer using Cypress and [pact-cypress-adaptor](
 
 It implements a "Product" website. You can see the [Provider](https://github.com/pactflow/example-pactflow-example-provider-dredd) counterpart (see below for other compatible example providers).
 
-It is using a public tenant on Pactflow, which you can access [here](https://test.pactflow.io) using the credentials `dXfltyFMgNOFZAxr8io9wJ37iUpY42M`/`O5AIZWxelWbLvqMd8PkAVycBJh2Psyg1`.
-
-Unlike with Pact, the provider does not need to replay any tests to ensure it remains compatible with its consumers. This is achieved with a call to "can-i-deploy", which performs a cross-contract validation, ensuring any consumer consumes a valid subset of the OAS for the provider.
-
-![Consumer Test](docs/consumer-scope.png 'Consumer Test')
-
-When you run the CI pipeline (see below for doing this), the pipeline should perform the following activities (simplified):
-
-![Consumer Pipeline](docs/consumer-pipeline.png 'Consumer Pipeline')
-
 ### Pre-requisites
 
 **Software**:
@@ -54,7 +44,6 @@ _How to use Cypress_
 
 ### FAQ
 
-
 #### 1. Do this work with `cy.route`?
 
 TBC
@@ -64,4 +53,3 @@ TBC
 No, you should not do this. This example doesn't support matching rules (meaning tests will be brittle), and the lack of specificity and control over the various testing states will lead to a lot of [pain](https://pactflow.io/blog/a-disastrous-tale-of-ui-testing-with-pact/).
 
 See https://github.com/pactflow/example-bdc-consumer-cypress for an example repository that shows how to use Pact+Cypress effectively.
-
