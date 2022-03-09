@@ -16,6 +16,7 @@ describe('products page with query', () => {
       },
     ).as('getProductById')
 
+    cy.setupPact('cypress-example-consumer', 'pactflow-example-provider-dredd')
     cy.visit('http://localhost:3000/products?id=2')
   })
 

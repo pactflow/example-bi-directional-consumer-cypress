@@ -39,6 +39,7 @@
     ]
   },
   "devDependencies": {
+    "@pactflow/pact-cypress-adaptor": "^1.2.3",
     "@testing-library/jest-dom": "4.2.4",
     "@typescript-eslint/eslint-plugin": "^2.34.0",
     "@typescript-eslint/parser": "^2.34.0",
