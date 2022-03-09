@@ -1,6 +1,21 @@
 import { uniqBy, reverse, omit } from 'lodash'
 
-const OMIT_HEADER_PROPERTY_LIST = ['access-control-expose-headers', 'access-control-allow-credentials']
+const OMITTED_AUTOGEN_CYPRESS_HEADERS = ['access-control-expose-headers', 
+  'access-control-allow-credentials', 
+  'host',
+  'proxy-connection',
+  'sec-ch-ua',
+  'sec-ch-ua-mobile',
+  'user-agent',
+  'sec-ch-ua-platform',
+  'origin',
+  'sec-fetch-site',
+  'sec-fetch-mode',
+  'sec-fetch-dest',
+  'referer',
+  'accept-encoding',
+  'accept-language'
+]
 export const formatAlias = (alias) => {
   if (Array.isArray(alias)) {
     return [...alias].map((a) => `@${a}`)
@@ -31,13 +46,13 @@ const constructInteraction = (intercept, testTitle) => {
     request: {
       method: intercept.request.method,
       path: path,
-      headers: omit(intercept.request.headers, OMIT_HEADER_PROPERTY_LIST),
+      headers: omit(intercept.request.headers, OMITTED_AUTOGEN_CYPRESS_HEADERS),
       body: intercept.request.body,
       query: query
     },
     response: {
       status: intercept.response.statusCode,
-      headers: omit(intercept.response.headers, OMIT_HEADER_PROPERTY_LIST),
+      headers: omit(intercept.response.headers, OMITTED_AUTOGEN_CYPRESS_HEADERS),
       body: intercept.response.body
     }
   }
