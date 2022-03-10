@@ -16,7 +16,7 @@
 /**
  * @type {Cypress.PluginConfig}
  */
- const pactCypressPlugin = require('@pactflow/pact-cypress-adaptor/dist/plugin')
+ const pactCypressPlugin = require('@pactflow/pact-cypress-adapter/dist/plugin')
  const fs = require('fs')
  
  module.exports = (on, config) => {
