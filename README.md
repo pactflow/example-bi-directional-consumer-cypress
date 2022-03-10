@@ -1,6 +1,6 @@
 # Example Cypress Consumer
 
-This is an example of a React consumer using Cypress and [pact-cypress-adaptor](https://www.npmjs.com/package/@pactflow/pact-cypress-adaptor) to demonstrate the bi-directional contract testing capability of [Pactflow](https://pactflow.io).
+This is an example of a React consumer using Cypress and [pact-cypress-adapter](https://www.npmjs.com/package/@pactflow/pact-cypress-adapter) to demonstrate the bi-directional contract testing capability of [Pactflow](https://pactflow.io).
 
 It implements a "Product" website. You can see the [Provider](https://github.com/pactflow/example-pactflow-example-provider-dredd) counterpart (see below for other compatible example providers).
 
