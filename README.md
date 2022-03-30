@@ -31,8 +31,8 @@ NOTE: Cypress tests are located in `./cypress/integration`. See below for how to
 
 then
 
-- `make test_cypress` - run cypress test locally
-- `make fake_ci_cypress` - emulate the CI process locally
+- `make test` - run cypress test locally
+- `make fake_ci` - emulate the CI process locally
 
 _How to use Cypress_
 

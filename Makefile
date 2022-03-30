@@ -24,7 +24,6 @@ all: test
 ## ====================
 
 ci: test publish_pacts can_i_deploy $(DEPLOY_TARGET)
-ci_cypress: test_cypress publish_cypress_pacts can_i_deploy $(DEPLOY_TARGET)
 
 # Run the ci target from a developer machine with the environment variables
 # set as if it was on CI.
@@ -35,13 +34,6 @@ fake_ci: .env
 	GIT_BRANCH=`git rev-parse --abbrev-ref HEAD` \
 	REACT_APP_API_BASE_URL=http://localhost:8080 \
 	make ci
-
-fake_ci_cypress: .env
-	@CI=true \
-	GIT_COMMIT=`git rev-parse --short HEAD`+`date +%s` \
-	GIT_BRANCH=`git rev-parse --abbrev-ref HEAD` \
-	REACT_APP_API_BASE_URL=http://localhost:8080 \
-	make ci_cypress
 
 publish_pacts: .env
 	@echo "\n========== STAGE: publish pacts ==========\n"
@@ -54,9 +46,6 @@ publish_cypress_pacts: .env
 ## =====================
 ## Build/test tasks
 ## =====================
-
-test: .env
-	@echo "\n========== STAGE: test (pact) ==========\n"
 
 test_cypress: .env
 	@echo "\n========== STAGE: test (cypress) ==========\n"
