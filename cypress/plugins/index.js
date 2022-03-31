@@ -20,5 +20,7 @@
  const fs = require('fs')
  
  module.exports = (on, config) => {
+   config.env.PACT_PROVIDER = process.env.PACT_PROVIDER || 'pactflow-example-provider-dredd'
    pactCypressPlugin(on, config, fs)
+   return config
  }
