@@ -47,7 +47,7 @@ publish_cypress_pacts: .env
 ## Build/test tasks
 ## =====================
 
-test_cypress: .env
+test: .env
 	@echo "\n========== STAGE: test (cypress) ==========\n"
 	npm run cypress:headless:chrome
 
