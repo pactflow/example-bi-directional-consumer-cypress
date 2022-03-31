@@ -5,7 +5,7 @@
 # Default to the read only token - the read/write token will be present on Travis CI.
 # It's set as a secure environment variable in the .travis.yml file
 GITHUB_ORG="pactflow"
-PACTICIPANT := "cypress-example-consumer"
+PACTICIPANT := "pactflow-example-consumer-cypress"
 GITHUB_WEBHOOK_UUID := "04510dc1-7f0a-4ed2-997d-114bfa86f8ad"
 PACT_CHANGED_WEBHOOK_UUID := "8e49caaa-0498-4cc1-9368-325de0812c8a"
 PACT_CLI="docker run --rm -v ${PWD}:${PWD} -e PACT_BROKER_BASE_URL -e PACT_BROKER_TOKEN pactfoundation/pact-cli"
@@ -24,7 +24,6 @@ all: test
 ## ====================
 
 ci: test publish_pacts can_i_deploy $(DEPLOY_TARGET)
-ci_cypress: test_cypress publish_cypress_pacts can_i_deploy $(DEPLOY_TARGET)
 
 # Run the ci target from a developer machine with the environment variables
 # set as if it was on CI.
@@ -33,21 +32,10 @@ fake_ci: .env
 	@CI=true \
 	GIT_COMMIT=`git rev-parse --short HEAD`+`date +%s` \
 	GIT_BRANCH=`git rev-parse --abbrev-ref HEAD` \
-	REACT_APP_API_BASE_URL=http://localhost:8080 \
+	REACT_APP_API_BASE_URL=http://localhost:3001 \
 	make ci
 
-fake_ci_cypress: .env
-	@CI=true \
-	GIT_COMMIT=`git rev-parse --short HEAD`+`date +%s` \
-	GIT_BRANCH=`git rev-parse --abbrev-ref HEAD` \
-	REACT_APP_API_BASE_URL=http://localhost:8080 \
-	make ci_cypress
-
 publish_pacts: .env
-	@echo "\n========== STAGE: publish pacts ==========\n"
-	@"${PACT_CLI}" publish ${PWD}/pacts --consumer-app-version ${GIT_COMMIT} --tag ${GIT_BRANCH}
-
-publish_cypress_pacts: .env
 	@echo "\n========== STAGE: publish cypress pacts ==========\n"
 	@"${PACT_CLI}" publish ${PWD}/cypress/pacts --consumer-app-version ${GIT_COMMIT} --tag ${GIT_BRANCH}
 
@@ -56,12 +44,8 @@ publish_cypress_pacts: .env
 ## =====================
 
 test: .env
-	@echo "\n========== STAGE: test (pact) ==========\n"
-
-test_cypress: .env
 	@echo "\n========== STAGE: test (cypress) ==========\n"
-	npm run cypress:headless:chrome
-
+	npm run start:ui:and:test
 
 ## =====================
 ## Deploy tasks
@@ -80,7 +64,7 @@ can_i_deploy: .env
 	@"${PACT_CLI}" broker can-i-deploy \
 	  --pacticipant ${PACTICIPANT} \
 	  --version ${GIT_COMMIT} \
-	#   --to-environment production \
+	  --to-environment production \
 	  --retry-while-unknown 0 \
 	  --retry-interval 10
 

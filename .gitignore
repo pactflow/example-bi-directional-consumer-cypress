@@ -27,3 +27,7 @@ yarn-error.log*
 
 pacts/
 logs/
+
+# cypress
+videos/
+screenshots/

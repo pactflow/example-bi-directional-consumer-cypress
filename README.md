@@ -1,5 +1,9 @@
 # Example Cypress Consumer
 
+[![Build](https://github.com/pactflow/example-bdc-consumer-cypress/actions/workflows/build.yml/badge.svg)](https://github.com/pactflow/example-bdc-consumer-cypress/actions/workflows/build.yml)
+
+[![Can I deploy Status](https://testdemo.pactflow.io/pacticipants/pactflow-example-consumer-cypress/branches/master/latest-version/can-i-deploy/to-environment/production/badge)](https://testdemo.pactflow.io/pacticipants/pactflow-example-consumer-cypress/branches/master/latest-version/can-i-deploy/to-environment/production/badge)
+
 This is an example of a React consumer using Cypress and [pact-cypress-adapter](https://www.npmjs.com/package/@pactflow/pact-cypress-adapter) to demonstrate the bi-directional contract testing capability of [Pactflow](https://pactflow.io).
 
 It implements a "Product" website. You can see the [Provider](https://github.com/pactflow/example-pactflow-example-provider-dredd) counterpart (see below for other compatible example providers).
@@ -27,12 +31,8 @@ To be able to run some of the commands locally, you will need to export the foll
 
 NOTE: Cypress tests are located in `./cypress/integration`. See below for how to start cypress test, generate consumer contract and publish contract to pactflow.
 
-- Spin up the ui project by running `npm run start`
-
-then
-
-- `make test_cypress` - run cypress test locally
-- `make fake_ci_cypress` - emulate the CI process locally
+- `make test` - run cypress test locally
+- `make fake_ci` - emulate the CI process locally
 
 _How to use Cypress_
 
