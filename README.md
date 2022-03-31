@@ -1,5 +1,9 @@
 # Example Cypress Consumer
 
+[![Build](https://github.com/pactflow/example-bdc-consumer-cypress/actions/workflows/build.yml/badge.svg)](https://github.com/pactflow/example-bdc-consumer-cypress/actions/workflows/build.yml)
+
+[![Can I deploy Status](https://testdemo.pactflow.io/pacticipants/pactflow-example-consumer-cypress/branches/master/latest-version/can-i-deploy/to-environment/production/badge)](https://testdemo.pactflow.io/pacticipants/pactflow-example-consumer-cypress/branches/master/latest-version/can-i-deploy/to-environment/production/badge)
+
 This is an example of a React consumer using Cypress and [pact-cypress-adapter](https://www.npmjs.com/package/@pactflow/pact-cypress-adapter) to demonstrate the bi-directional contract testing capability of [Pactflow](https://pactflow.io).
 
 It implements a "Product" website. You can see the [Provider](https://github.com/pactflow/example-pactflow-example-provider-dredd) counterpart (see below for other compatible example providers).
