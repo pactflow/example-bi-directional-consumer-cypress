@@ -32,14 +32,10 @@ fake_ci: .env
 	@CI=true \
 	GIT_COMMIT=`git rev-parse --short HEAD`+`date +%s` \
 	GIT_BRANCH=`git rev-parse --abbrev-ref HEAD` \
-	REACT_APP_API_BASE_URL=http://localhost:8080 \
+	REACT_APP_API_BASE_URL=http://localhost:3001 \
 	make ci
 
 publish_pacts: .env
-	@echo "\n========== STAGE: publish pacts ==========\n"
-	@"${PACT_CLI}" publish ${PWD}/pacts --consumer-app-version ${GIT_COMMIT} --tag ${GIT_BRANCH}
-
-publish_cypress_pacts: .env
 	@echo "\n========== STAGE: publish cypress pacts ==========\n"
 	@"${PACT_CLI}" publish ${PWD}/cypress/pacts --consumer-app-version ${GIT_COMMIT} --tag ${GIT_BRANCH}
 
@@ -49,8 +45,7 @@ publish_cypress_pacts: .env
 
 test: .env
 	@echo "\n========== STAGE: test (cypress) ==========\n"
-	npm run cypress:headless:chrome
-
+	npm run start:ui:and:test
 
 ## =====================
 ## Deploy tasks

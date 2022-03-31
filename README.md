@@ -27,10 +27,6 @@ To be able to run some of the commands locally, you will need to export the foll
 
 NOTE: Cypress tests are located in `./cypress/integration`. See below for how to start cypress test, generate consumer contract and publish contract to pactflow.
 
-- Spin up the ui project by running `npm run start`
-
-then
-
 - `make test` - run cypress test locally
 - `make fake_ci` - emulate the CI process locally
 
