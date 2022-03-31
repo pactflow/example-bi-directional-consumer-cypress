@@ -21,8 +21,8 @@ jobs:
             "pactflow-example-provider-dredd",
             "pactflow-example-provider-restassured",
             "pactflow-example-provider-postman",
-            "pactflow-example-provider",
-            'pactflow-example-bi-directional-provider-dotnet'
+            # "pactflow-example-provider",
+            # 'pactflow-example-bi-directional-provider-dotnet'
           ]
     steps:
       - uses: actions/checkout@v2
