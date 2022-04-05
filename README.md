@@ -1,12 +1,12 @@
 # Example Cypress Consumer
 
-[![Build](https://github.com/pactflow/example-bdc-consumer-cypress/actions/workflows/build.yml/badge.svg)](https://github.com/pactflow/example-bdc-consumer-cypress/actions/workflows/build.yml)
+[![Build](https://github.com/pactflow/example-bi-directional-consumer-cypress/actions/workflows/build.yml/badge.svg)](https://github.com/pactflow/example-bi-directional-consumer-cypress/actions/workflows/build.yml)
 
 [![Can I deploy Status](https://testdemo.pactflow.io/pacticipants/pactflow-example-consumer-cypress/branches/main/latest-version/can-i-deploy/to-environment/production/badge)](https://testdemo.pactflow.io/pacticipants/pactflow-example-consumer-cypress/branches/main/latest-version/can-i-deploy/to-environment/production/badge)
 
 This is an example of a React consumer using Cypress and [pact-cypress-adapter](https://www.npmjs.com/package/@pactflow/pact-cypress-adapter) to demonstrate the bi-directional contract testing capability of [Pactflow](https://pactflow.io).
 
-It implements a "Product" website. You can see the [Provider](https://github.com/pactflow/example-pactflow-example-provider-dredd) counterpart (see below for other compatible example providers).
+It implements a "Product" website. You can see the [Provider](https://github.com/pactflow/example-pactflow-example-bi-directional-provider-dredd) counterpart (see below for other compatible example providers).
 
 ### Pre-requisites
 
@@ -21,9 +21,9 @@ To be able to run some of the commands locally, you will need to export the foll
 
 - `PACT_BROKER_TOKEN`: a valid [API token](https://docs.pactflow.io/docs/getting-started/#configuring-your-api-token) for Pactflow
 - `PACT_BROKER_BASE_URL`: a fully qualified domain name with protocol to your pact broker e.g. https://testdemo.pactflow.io
-- `PACT_PROVIDER=pactflow-example-provider-dredd`: this changes the default provider to the Dredd based provider (https://github.com/pactflow/example-provider-dredd)
-- `PACT_PROVIDER=pactflow-example-provider-postman`: ... Postman (https://github.com/pactflow/example-provider-postman)
-- `PACT_PROVIDER=pactflow-example-provider-restassured`: ... Rest Assured (https://github.com/pactflow/example-provider-restassured)
+- `PACT_PROVIDER=pactflow-example-bi-directional-provider-dredd`: this changes the default provider to the Dredd based provider (https://github.com/pactflow/example-bi-directional-provider-dredd)
+- `PACT_PROVIDER=pactflow-example-bi-directional-provider-postman`: ... Postman (https://github.com/pactflow/example-bi-directional-provider-postman)
+- `PACT_PROVIDER=pactflow-example-bi-directional-provider-restassured`: ... Rest Assured (https://github.com/pactflow/example-bi-directional-provider-restassured)
 
 ### Usage
 
@@ -52,4 +52,4 @@ TBC
 
 No, you should not do this. This example doesn't support matching rules (meaning tests will be brittle), and the lack of specificity and control over the various testing states will lead to a lot of [pain](https://pactflow.io/blog/a-disastrous-tale-of-ui-testing-with-pact/).
 
-See https://github.com/pactflow/example-bdc-consumer-cypress for an example repository that shows how to use Pact+Cypress effectively.
+See https://github.com/pactflow/example-bi-directional-consumer-cypress for an example repository that shows how to use Pact+Cypress effectively.

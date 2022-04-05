@@ -1,5 +1,5 @@
 {
-  "name": "example-bdc-consumer-cypress",
+  "name": "example-bi-directional-consumer-cypress",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
