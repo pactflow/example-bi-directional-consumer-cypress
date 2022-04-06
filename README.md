@@ -76,7 +76,7 @@ This project is currently compatible with the following provider(s):
 * [pactflow-example-bi-directional-provider-dredd](https://github.com/pactflow/example-bi-directional-provider-dredd)
 * [pactflow-example-bi-directional-provider-restassured](https://github.com/pactflow/example-provider-restassured)
 * [pactflow-example-bi-directional-provider-postman](https://github.com/pactflow/example-bi-directional-provider-postman)
-* [pactflow-example-bi-directional-provider-dotnet](https://github.com/pactflow/example-bi-directional-provider-dotnet)
+<!-- * [pactflow-example-bi-directional-provider-dotnet](https://github.com/pactflow/example-bi-directional-provider-dotnet) -->
 
 See [Environment variables](#environment-variables) on how to set these up.
   
