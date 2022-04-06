@@ -16,7 +16,7 @@ describe('products page with query', () => {
       },
     ).as('getProductById')
 
-    cy.setupPact('pactflow-example-consumer-cypress', Cypress.env('PACT_PROVIDER'))
+    cy.setupPact('pactflow-example-bi-directional-consumer-cypress', Cypress.env('PACT_PROVIDER'))
     cy.visit('http://localhost:3000/products?id=2')
   })
 
