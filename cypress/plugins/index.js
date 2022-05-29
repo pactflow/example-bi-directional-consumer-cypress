@@ -16,11 +16,12 @@
 /**
  * @type {Cypress.PluginConfig}
  */
- const pactCypressPlugin = require('@pactflow/pact-cypress-adapter/dist/plugin')
- const fs = require('fs')
- 
- module.exports = (on, config) => {
-   config.env.PACT_PROVIDER = process.env.PACT_PROVIDER || 'pactflow-example-bi-directional-provider-postman'
-   pactCypressPlugin(on, config, fs)
-   return config
- }
+const pactCypressPlugin = require('@pactflow/pact-cypress-adapter/dist/plugin')
+const fs = require('fs')
+
+module.exports = (on, config) => {
+  config.env.PACT_PROVIDER = process.env.PACT_PROVIDER || 'pactflow-example-bi-directional-provider-postman'
+  config.env.PACT_CONSUMER = process.env.PACTICIPANT || 'pactflow-example-bi-directional-consumer-cypress'
+  pactCypressPlugin(on, config, fs)
+  return config
+}
