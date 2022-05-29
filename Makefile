@@ -53,7 +53,7 @@ endif
 # endif
 
 # Only deploy from main
-ifeq ($(GIT_BRANCH),os_detection)
+ifeq ($(GIT_BRANCH),main)
 	DEPLOY_TARGET=deploy
 else
 	DEPLOY_TARGET=no_deploy

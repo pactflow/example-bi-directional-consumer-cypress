@@ -33,7 +33,6 @@ while getopts d:r:s:h: flag; do
 done
 
 GIT_BRANCH=$(git rev-parse --abbrev-ref HEAD)
-GIT_BRANCH=os_detection
 output=$(curl -L -v -X POST https://api.github.com/repos/${repository_slug}/actions/workflows/cross_test.yml/dispatches \
     -H 'Accept: application/vnd.github.v3+json' \
     -H "Authorization: Bearer $GITHUB_ACCESS_TOKEN_FOR_PF_RELEASES" \
