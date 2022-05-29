@@ -1,7 +1,6 @@
 name: Cross test all pact cli versions / providers
 
 on:
-  push:
   workflow_dispatch:
     inputs: # inputs aren't available on push, so we set them explicitly in separate steps
       PACT_CLI_DOCKER_VERSION:
@@ -54,13 +53,12 @@ jobs:
       matrix:
         os: ['ubuntu-latest', 'windows-latest','macos-latest']
         pact_tool: ['docker', 'ruby_cli','ruby_standalone' ]
-        node-version: [16.x]
-        # node-version: [14.x,16.x]
+        node-version: [14.x,16.x]
         pact_provider:
           [
-            # "pactflow-example-bi-directional-provider-dredd",
+            "pactflow-example-bi-directional-provider-dredd",
             "pactflow-example-bi-directional-provider-postman",
-            # "pactflow-example-bi-directional-provider-restassured",
+            "pactflow-example-bi-directional-provider-restassured",
             # "pactflow-example-provider", # cdct provider - no oas
             # "pactflow-example-bi-directional-provider-dotnet" # mismatch
           ]
