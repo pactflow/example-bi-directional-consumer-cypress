@@ -1,4 +1,4 @@
-name: Cross test all pact cli versions / providers
+name: test_pact_cli_tools_cross_os
 
 on:
   workflow_dispatch:
