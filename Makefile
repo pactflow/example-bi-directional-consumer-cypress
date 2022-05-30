@@ -5,10 +5,52 @@
 # Default to the read only token - the read/write token will be present on Travis CI.
 # It's set as a secure environment variable in the .travis.yml file
 GITHUB_ORG="pactflow"
-PACTICIPANT := "pactflow-example-bi-directional-consumer-cypress"
+PACTICIPANT ?= "pactflow-example-bi-directional-consumer-cypress"
 GITHUB_WEBHOOK_UUID := "04510dc1-7f0a-4ed2-997d-114bfa86f8ad"
 PACT_CHANGED_WEBHOOK_UUID := "8e49caaa-0498-4cc1-9368-325de0812c8a"
-PACT_CLI="docker run --rm -v ${PWD}:${PWD} -e PACT_BROKER_BASE_URL -e PACT_BROKER_TOKEN pactfoundation/pact-cli"
+PACT_CLI_VERSION?=latest
+PACT_CLI_DOCKER_VERSION?=latest
+PACT_CLI_STANDALONE_VERSION?=1.88.90
+DOCKER_BASE_PATH=/app/
+PACT_FILES_LOCATION=cypress/pacts
+PACT_CLI_DOCKER_RUN_COMMAND?=docker run --rm -v /${PWD}:${PWD} -e PACT_BROKER_BASE_URL -e PACT_BROKER_TOKEN pactfoundation/pact-cli:${PACT_CLI_DOCKER_VERSION}
+CLI_COMMAND_PACTFLOW=pactflow
+CLI_COMMAND_PACT_BROKER?=pact-broker
+CLI_COMMAND_DOCKER_PACT_BROKER=broker # This is aliased slightly differently than above
+GIT_COMMIT?=$(shell git rev-parse --short HEAD)
+GIT_BRANCH?=$(shell git rev-parse --abbrev-ref HEAD)
+REACT_APP_API_BASE_URL=http://localhost:3001
+SHELL := /bin/bash
+ifeq '$(findstring ;,$(PATH))' ';'
+	detected_OS := Windows
+else
+	detected_OS := $(shell uname 2>/dev/null || echo Unknown)
+	detected_OS := $(patsubst CYGWIN%,Cygwin,$(detected_OS))
+	detected_OS := $(patsubst MSYS%,MSYS,$(detected_OS))
+	detected_OS := $(patsubst MINGW%,MSYS,$(detected_OS))
+endif
+
+ifneq ($(filter $(PACT_TOOL),ruby_cli ruby_standalone),)
+	PACT_BROKER_COMMAND=${CLI_COMMAND_PACT_BROKER}
+	PACTFLOW_CLI_COMMAND=${CLI_COMMAND_PACTFLOW}
+else
+	PACT_BROKER_COMMAND=${PACT_CLI_DOCKER_RUN_COMMAND} ${CLI_COMMAND_DOCKER_PACT_BROKER}
+	PACTFLOW_CLI_COMMAND=${PACT_CLI_DOCKER_RUN_COMMAND} ${CLI_COMMAND_PACTFLOW}	
+endif
+
+ifneq ($(filter $(detected_OS),Windows MSYS),)
+	STANDALONE_COMMAND_WIN="${CLI_COMMAND_PACT_BROKER}.bat"
+	PACT_FILES_LOCATION="$(shell readlink -f cypress/pacts/*)"
+else
+	STANDALONE_COMMAND_WIN="${CLI_COMMAND_PACT_BROKER}"
+	PACT_FILES_LOCATION=${PWD}/cypress/pacts
+endif
+ifeq ($(PACT_TOOL),ruby_standalone)
+	PACT_BROKER_COMMAND="./pact/bin/${STANDALONE_COMMAND_WIN}"
+endif
+# ifeq ($(PACT_TOOL),ruby_cli)
+# 	PACT_FILES_LOCATION=${PWD}/cypress/pacts
+# endif
 
 # Only deploy from main
 ifeq ($(GIT_BRANCH),main)
@@ -30,14 +72,11 @@ ci: test publish_pacts can_i_deploy $(DEPLOY_TARGET)
 # Use this for quick feedback when playing around with your workflows.
 fake_ci: .env
 	@CI=true \
-	GIT_COMMIT=`git rev-parse --short HEAD`+`date +%s` \
-	GIT_BRANCH=`git rev-parse --abbrev-ref HEAD` \
-	REACT_APP_API_BASE_URL=http://localhost:3001 \
 	make ci
 
 publish_pacts: .env
 	@echo "\n========== STAGE: publish cypress pacts ==========\n"
-	@"${PACT_CLI}" publish ${PWD}/cypress/pacts --consumer-app-version ${GIT_COMMIT} --branch ${GIT_BRANCH}
+	@${PACT_BROKER_COMMAND} publish ${PACT_FILES_LOCATION} --consumer-app-version ${GIT_COMMIT} --branch ${GIT_BRANCH}
 
 ## =====================
 ## Build/test tasks
@@ -52,7 +91,7 @@ test: .env
 ## =====================
 
 create_environment:
-	@"${PACT_CLI}" broker create-environment --name production --production
+	@"${PACT_BROKER_COMMAND}" create-environment --name production --production
 
 deploy: deploy_app record_deployment
 
@@ -61,7 +100,7 @@ no_deploy:
 
 can_i_deploy: .env
 	@echo "\n========== STAGE: can-i-deploy? ==========\n"
-	@"${PACT_CLI}" broker can-i-deploy \
+	@${PACT_BROKER_COMMAND} can-i-deploy \
 	  --pacticipant ${PACTICIPANT} \
 	  --version ${GIT_COMMIT} \
 	  --to-environment production \
@@ -73,7 +112,7 @@ deploy_app:
 	@echo "Deploying to production"
 
 record_deployment: .env
-	@"${PACT_CLI}" broker record-deployment --pacticipant ${PACTICIPANT} --version ${GIT_COMMIT} --environment production
+	@${PACT_BROKER_COMMAND} record-deployment --pacticipant ${PACTICIPANT} --version ${GIT_COMMIT} --environment production
 
 ## =====================
 ## Pactflow set up tasks
@@ -92,7 +131,7 @@ create_github_token_secret:
 # so that any PRs will get a status that shows what the status of
 # the pact is.
 create_or_update_github_commit_status_webhook:
-	@"${PACT_CLI}" \
+	@${PACT_BROKER_COMMAND} \
 	  broker create-or-update-webhook \
 	  'https://api.github.com/repos/pactflow/example-consumer/statuses/$${pactbroker.consumerVersionNumber}' \
 	  --header 'Content-Type: application/json' 'Accept: application/vnd.github.v3+json' 'Authorization: token $${user.githubCommitStatusToken}' \
@@ -121,3 +160,29 @@ output:
 
 clean: output
 	rm pacts/*
+
+
+install-pact-ruby-cli:
+	case "${PACT_CLI_VERSION}" in \
+	latest) gem install pact_broker-client;; \
+	"") gem install pact_broker-client;; \
+		*) gem install pact_broker-client -v ${PACT_CLI_VERSION} ;; \
+	esac
+
+uninstall-pact-ruby-cli:
+	gem uninstall -aIx pact_broker-client
+
+install-pact-ruby-standalone:
+	case "${detected_OS}" in \
+	Windows|MSYS) curl -LO https://github.com/pact-foundation/pact-ruby-standalone/releases/download/v${PACT_CLI_STANDALONE_VERSION}/pact-${PACT_CLI_STANDALONE_VERSION}-win32.zip && \
+		unzip pact-${PACT_CLI_STANDALONE_VERSION}-win32.zip && \
+		./pact/bin/pact-mock-service.bat --help start;; \
+	Darwin) curl -LO https://github.com/pact-foundation/pact-ruby-standalone/releases/download/v${PACT_CLI_STANDALONE_VERSION}/pact-${PACT_CLI_STANDALONE_VERSION}-osx.tar.gz && \
+		tar xzf pact-${PACT_CLI_STANDALONE_VERSION}-osx.tar.gz && \
+		./pact/bin/pact-mock-service --help start && \
+		./pact/bin/pact-provider-verifier --help verify;; \
+	Linux) curl -LO https://github.com/pact-foundation/pact-ruby-standalone/releases/download/v${PACT_CLI_STANDALONE_VERSION}/pact-${PACT_CLI_STANDALONE_VERSION}-linux-x86_64.tar.gz && \
+		tar xzf pact-${PACT_CLI_STANDALONE_VERSION}-linux-x86_64.tar.gz && \
+		./pact/bin/pact-mock-service --help start && \
+		./pact/bin/pact-provider-verifier --help verify ;; \
+	esac

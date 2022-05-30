@@ -13,10 +13,10 @@ describe('products page with query', () => {
         statusCode: 200,
         body: productResponse,
         headers: { 'access-control-allow-origin': '*' }
-      },
+      }
     ).as('getProductById')
 
-    cy.setupPact('pactflow-example-bi-directional-consumer-cypress', Cypress.env('PACT_PROVIDER'))
+    cy.setupPact(Cypress.env('PACT_CONSUMER'), Cypress.env('PACT_PROVIDER'))
     cy.visit('http://localhost:3000/products?id=2')
   })
 
