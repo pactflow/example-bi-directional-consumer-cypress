@@ -8,7 +8,7 @@ env:
   PACT_BROKER_BASE_URL: https://testdemo.pactflow.io
   PACT_BROKER_TOKEN: ${{ secrets.PACTFLOW_TOKEN_FOR_CI_CD_WORKSHOP }}
   REACT_APP_API_BASE_URL: http://localhost:3001
-  GIT_COMMIT: ${{ github.sha }}
+  COMMIT: ${{ github.sha }}
   GIT_REF: ${{ github.ref }}
   PACT_PROVIDER: pactflow-example-bi-directional-provider-postman
   PACTICIPANT: pactflow-example-bi-directional-consumer-cypress
@@ -26,7 +26,7 @@ jobs:
       - name: Test
         run: make test
       - name: Publish pacts
-        run: GIT_BRANCH=${GIT_REF:11} make publish_pacts
+        run: BRANCH=${GIT_REF:11} make publish_pacts
 
   # Runs on branches as well, so we know the status of our PRs
   can-i-deploy:
@@ -35,7 +35,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Can I deploy?
-        run: GIT_BRANCH=${GIT_REF:11} make can_i_deploy
+        run: BRANCH=${GIT_REF:11} make can_i_deploy
 
   # Only deploy from main
   deploy:
@@ -44,5 +44,5 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Deploy
-        run: GIT_BRANCH=${GIT_REF:11} make deploy
+        run: BRANCH=${GIT_REF:11} make deploy
         # if: github.ref == 'refs/heads/main' # note this is set in our Makefile

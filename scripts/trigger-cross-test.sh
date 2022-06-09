@@ -32,11 +32,11 @@ while getopts d:r:s:h: flag; do
     esac
 done
 
-GIT_BRANCH=$(git rev-parse --abbrev-ref HEAD)
+BRANCH=$(git rev-parse --abbrev-ref HEAD)
 output=$(curl -L -v -X POST https://api.github.com/repos/${repository_slug}/actions/workflows/cross_test.yml/dispatches \
     -H 'Accept: application/vnd.github.v3+json' \
     -H "Authorization: Bearer $GITHUB_ACCESS_TOKEN_FOR_PF_RELEASES" \
-    -d "{\"ref\":\"$GIT_BRANCH\",\"inputs\":{\"PACT_CLI_DOCKER_VERSION\":\"$PACT_CLI_DOCKER_VERSION\",\"PACT_CLI_VERSION\":\"$PACT_CLI_VERSION\",\"PACT_CLI_STANDALONE_VERSION\":\"$PACT_CLI_STANDALONE_VERSION\"}}" 2>&1)
+    -d "{\"ref\":\"$BRANCH\",\"inputs\":{\"PACT_CLI_DOCKER_VERSION\":\"$PACT_CLI_DOCKER_VERSION\",\"PACT_CLI_VERSION\":\"$PACT_CLI_VERSION\",\"PACT_CLI_STANDALONE_VERSION\":\"$PACT_CLI_STANDALONE_VERSION\"}}" 2>&1)
 
 if ! echo "${output}" | grep "HTTP\/2 204" >/dev/null; then
     echo "$output" | sed "s/${GITHUB_ACCESS_TOKEN_FOR_PF_RELEASES}/********/g"
