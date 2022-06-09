@@ -22,7 +22,7 @@ env:
   PACT_BROKER_BASE_URL: https://testdemo.pactflow.io
   PACT_BROKER_TOKEN: ${{ secrets.PACTFLOW_TOKEN_FOR_CI_CD_WORKSHOP }}
   REACT_APP_API_BASE_URL: http://localhost:3001
-  GIT_COMMIT: ${{ github.sha }}
+  VERSION: ${{ github.sha }}
   GITHUB_REF: ${{ github.ref }}
   PACT_CLI_VERSION: ${{ github.event.inputs.PACT_CLI_VERSION }}
   PACT_CLI_DOCKER_VERSION: ${{ github.event.inputs.PACT_CLI_DOCKER_VERSION }}
@@ -35,12 +35,12 @@ jobs:
     name: 🏗️ setup
     runs-on: ubuntu-latest
     steps:
-      - run: echo "GIT_BRANCH=${GITHUB_REF:11}" >> $GITHUB_ENV 
+      - run: echo "BRANCH=${GITHUB_REF:11}" >> $GITHUB_ENV 
       - run: echo "PACT_CLI_VERSION=${PACT_CLI_VERSION:=latest}" >> $GITHUB_ENV 
       - run: echo "PACT_CLI_DOCKER_VERSION=${PACT_CLI_DOCKER_VERSION:=latest}" >> $GITHUB_ENV 
       - run: echo "PACT_CLI_STANDALONE_VERSION=${PACT_CLI_STANDALONE_VERSION:-${PACT_CLI_STANDALONE_VERSION_DEFAULT}}" >> $GITHUB_ENV 
     outputs:
-      GIT_BRANCH: ${{ env.GIT_BRANCH }}
+      BRANCH: ${{ env.BRANCH }}
       PACT_CLI_VERSION: ${{ env.PACT_CLI_VERSION }}
       PACT_CLI_DOCKER_VERSION: ${{ env.PACT_CLI_DOCKER_VERSION }}
       PACT_CLI_STANDALONE_VERSION: ${{ env.PACT_CLI_STANDALONE_VERSION }}
@@ -65,7 +65,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     env:
       PACT_TOOL: ${{ matrix.pact_tool }}
-      GIT_BRANCH: ${{ needs.setup.outputs.GIT_BRANCH }}
+      BRANCH: ${{ needs.setup.outputs.BRANCH }}
       PACTICIPANT: "pactflow-example-bi-directional-consumer-cypress-${{ matrix.os }}-${{ matrix.node-version }}-${{ matrix.pact_tool }}"
       PACT_PROVIDER: ${{ matrix.pact_provider }}
       PACT_CLI_VERSION: ${{ needs.setup.outputs.PACT_CLI_VERSION}}
