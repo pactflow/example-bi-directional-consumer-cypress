@@ -8,7 +8,7 @@ GITHUB_ORG="pactflow"
 PACTICIPANT ?= "pactflow-example-bi-directional-consumer-cypress"
 GITHUB_WEBHOOK_UUID := "04510dc1-7f0a-4ed2-997d-114bfa86f8ad"
 PACT_CHANGED_WEBHOOK_UUID := "8e49caaa-0498-4cc1-9368-325de0812c8a"
-COMMIT?=$(shell git rev-parse --short HEAD)
+COMMIT?=$(shell npx -y absolute-version)
 BRANCH?=$(shell git rev-parse --abbrev-ref HEAD)
 
 ## ====================
@@ -41,7 +41,7 @@ fake_ci: .env
 test_and_publish: test publish_pacts
 
 publish_pacts: .env
-	@echo "\n========== STAGE: publish cypress pacts ==========\n"
+	@echo "\n========== STAGE: publish_pacts generated with cypress ==========\n"
 	@${PACT_BROKER_COMMAND} publish ${PACT_FILES_LOCATION} --consumer-app-version ${COMMIT} --branch ${BRANCH}
 
 ## =====================
@@ -69,7 +69,9 @@ create_environment:
 	@"${PACT_BROKER_COMMAND}" create-environment --name production --production
 
 deploy: deploy_app record_deployment
+
 deploy_target: can_i_deploy $(DEPLOY_TARGET)
+
 no_deploy:
 	@echo "Not deploying as not on main branch"
 
@@ -121,10 +123,32 @@ create_or_update_github_commit_status_webhook:
 test_github_webhook:
 	@curl -v -X POST ${PACT_BROKER_BASE_URL}/webhooks/${GITHUB_WEBHOOK_UUID}/execute -H "Authorization: Bearer ${PACT_BROKER_TOKEN}"
 
-## ====================
+## ======================
+## Misc
+## ======================
+
+.env:
+	touch .env
+
+output:
+	mkdir -p ./pacts
+	touch ./pacts/tmp
+
+clean: output
+	rm pacts/*
+
+## =====================
 ## Multi-platform detection and support
-## ====================
+## Pact CLI install/uninstall tasks
+## =====================
 SHELL := /bin/bash
+PACT_TOOL?=docker
+PACT_CLI_DOCKER_VERSION?=0.50.0.28
+PACT_CLI_VERSION?=latest
+PACT_CLI_STANDALONE_VERSION?=1.89.00-rc1
+PACT_CLI_DOCKER_RUN_COMMAND?=docker run --rm -v /${PWD}:/${PWD} -w ${PWD} -e PACT_BROKER_BASE_URL -e PACT_BROKER_TOKEN pactfoundation/pact-cli:${PACT_CLI_DOCKER_VERSION}
+PACT_BROKER_COMMAND=pact-broker
+PACTFLOW_CLI_COMMAND=pactflow
 
 ifeq '$(findstring ;,$(PATH))' ';'
 	detected_OS := Windows
@@ -152,17 +176,6 @@ ifeq ($(PACT_TOOL),docker)
 	PACTFLOW_CLI_COMMAND:=${PACT_CLI_DOCKER_RUN_COMMAND} ${PACTFLOW_CLI_COMMAND}
 endif
 
-
-## =====================
-## Pact CLI install/uninstall tasks
-## =====================
-PACT_TOOL?=docker
-PACT_CLI_DOCKER_VERSION?=0.50.0.28
-PACT_CLI_VERSION?=latest
-PACT_CLI_STANDALONE_VERSION?=1.89.00-rc1
-PACT_CLI_DOCKER_RUN_COMMAND?=docker run --rm -v /${PWD}:/${PWD} -w ${PWD} -e PACT_BROKER_BASE_URL -e PACT_BROKER_TOKEN pactfoundation/pact-cli:${PACT_CLI_DOCKER_VERSION}
-PACT_BROKER_COMMAND=pact-broker
-PACTFLOW_CLI_COMMAND=pactflow
 
 install-pact-ruby-cli:
 	case "${PACT_CLI_VERSION}" in \
@@ -192,18 +205,3 @@ install-pact-ruby-standalone:
 		./pact/bin/pact-provider-verifier --help && \
 		./pact/bin/pactflow help;; \
 	esac
-
-
-## ======================
-## Misc
-## ======================
-
-.env:
-	touch .env
-
-output:
-	mkdir -p ./pacts
-	touch ./pacts/tmp
-
-clean: output
-	rm pacts/*
