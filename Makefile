@@ -8,7 +8,7 @@ GITHUB_ORG="pactflow"
 PACTICIPANT ?= "pactflow-example-bi-directional-consumer-cypress"
 GITHUB_WEBHOOK_UUID := "04510dc1-7f0a-4ed2-997d-114bfa86f8ad"
 PACT_CHANGED_WEBHOOK_UUID := "8e49caaa-0498-4cc1-9368-325de0812c8a"
-COMMIT?=$(shell npx -y absolute-version)
+VERSION?=$(shell npx -y absolute-version)
 BRANCH?=$(shell git rev-parse --abbrev-ref HEAD)
 
 ## ====================
@@ -42,7 +42,7 @@ test_and_publish: test publish_pacts
 
 publish_pacts: .env
 	@echo "\n========== STAGE: publish_pacts generated with cypress ==========\n"
-	@${PACT_BROKER_COMMAND} publish ${PACT_FILES_LOCATION} --consumer-app-version ${COMMIT} --branch ${BRANCH}
+	@${PACT_BROKER_COMMAND} publish ${PACT_FILES_LOCATION} --consumer-app-version ${VERSION} --branch ${BRANCH}
 
 ## =====================
 ## Build/test tasks
@@ -79,7 +79,7 @@ can_i_deploy: .env
 	@echo "\n========== STAGE: can-i-deploy? ==========\n"
 	@${PACT_BROKER_COMMAND} can-i-deploy \
 	  --pacticipant ${PACTICIPANT} \
-	  --version ${COMMIT} \
+	  --version ${VERSION} \
 	  --to-environment production \
 	  --retry-while-unknown 0 \
 	  --retry-interval 10
@@ -89,7 +89,7 @@ deploy_app:
 	@echo "Deploying to production"
 
 record_deployment: .env
-	@${PACT_BROKER_COMMAND} record-deployment --pacticipant ${PACTICIPANT} --version ${COMMIT} --environment production
+	@${PACT_BROKER_COMMAND} record-deployment --pacticipant ${PACTICIPANT} --version ${VERSION} --environment production
 
 ## =====================
 ## Pactflow set up tasks

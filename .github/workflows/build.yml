@@ -8,7 +8,7 @@ env:
   PACT_BROKER_BASE_URL: https://testdemo.pactflow.io
   PACT_BROKER_TOKEN: ${{ secrets.PACTFLOW_TOKEN_FOR_CI_CD_WORKSHOP }}
   REACT_APP_API_BASE_URL: http://localhost:3001
-  COMMIT: ${{ github.sha }}
+  VERSION: ${{ github.sha }}
   GIT_REF: ${{ github.ref }}
   PACT_PROVIDER: pactflow-example-bi-directional-provider-postman
   PACTICIPANT: pactflow-example-bi-directional-consumer-cypress
