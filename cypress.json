@@ -1,6 +1,7 @@
 {
-    "env": {
-        "headersBlocklist": ["ignore-me-globally"],
-        "ignoreDefaultBlocklist": false
-    }
+  "env": {
+    "headersBlocklist": ["ignore-me-globally"],
+    "ignoreDefaultBlocklist": false
+  },
+  "retries": 3
 }
