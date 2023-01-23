@@ -1,4 +1,4 @@
-# Why are we using a Makefile? Pactflow has around 30 example consumer and provider projects that show how to use Pact. 
+# Why are we using a Makefile? PactFlow has around 30 example consumer and provider projects that show how to use Pact. 
 # We often use them for demos and workshops, and Makefiles allow us to provide a consistent language and platform agnostic interface
 # for each project. You do not need to use Makefiles to use Pact in your own project!
 
@@ -92,7 +92,7 @@ record_deployment: .env
 	@${PACT_BROKER_COMMAND} record-deployment --pacticipant ${PACTICIPANT} --version ${VERSION} --environment production
 
 ## =====================
-## Pactflow set up tasks
+## PactFlow set up tasks
 ## =====================
 
 # This should be called once before creating the webhook
