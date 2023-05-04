@@ -81,7 +81,7 @@ can_i_deploy: .env
 	  --pacticipant ${PACTICIPANT} \
 	  --version ${VERSION} \
 	  --to-environment production \
-	  --retry-while-unknown 0 \
+	  --retry-while-unknown 6 \
 	  --retry-interval 10
 
 deploy_app:
