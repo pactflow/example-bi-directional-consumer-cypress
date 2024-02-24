@@ -22,7 +22,7 @@
     "cypress:open": "cypress open",
     "cypress": "cypress run",
     "cypress:headless:chrome": "cypress run --browser chrome --headless",
-    "start:ui:and:test": "start-server-and-test start http://localhost:3000 cypress:headless:chrome"
+    "start:ui:and:test": "start-server-and-test start 3000 cypress:headless:chrome"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -56,6 +56,6 @@
     "eslint-plugin-jsx-a11y": "^6.3.1",
     "eslint-plugin-react": "^7.21.3",
     "eslint-plugin-react-hooks": "^1.7.0",
-    "start-server-and-test": "^1.14.0"
+    "start-server-and-test": "^2.0.3"
   }
 }
