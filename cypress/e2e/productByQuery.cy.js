@@ -20,7 +20,7 @@ describe('products page with query', () => {
     cy.visit('http://localhost:3000/products?id=2')
   })
 
-  it.only('displays product item by query', () => {
+  it('displays product item by query', () => {
     cy.usePactWait('getProductById')
     cy.get('.product-item').its('length').should('eq', 3)
   })
