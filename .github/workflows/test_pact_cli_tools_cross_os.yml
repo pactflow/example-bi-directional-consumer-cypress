@@ -15,7 +15,7 @@ on:
       PACT_CLI_STANDALONE_VERSION:
         description: Tag from https://github.com/pact-foundation/pact-ruby-standalone/releases
         required: true
-        default: 1.89.00
+        default: 2.4.1
         type: string
 
 env:
@@ -27,7 +27,7 @@ env:
   PACT_CLI_VERSION: ${{ github.event.inputs.PACT_CLI_VERSION }}
   PACT_CLI_DOCKER_VERSION: ${{ github.event.inputs.PACT_CLI_DOCKER_VERSION }}
   PACT_CLI_STANDALONE_VERSION: ${{ github.event.inputs.PACT_CLI_STANDALONE_VERSION }}
-  PACT_CLI_STANDALONE_VERSION_DEFAULT: 1.88.90
+  PACT_CLI_STANDALONE_VERSION_DEFAULT: 2.4.1
 
 jobs:
 
@@ -51,9 +51,23 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: ['ubuntu-latest', 'windows-latest','macos-latest']
-        pact_tool: ['docker', 'ruby_cli','ruby_standalone' ]
-        node-version: [14.x,16.x]
+        os: 
+          [
+            'ubuntu-latest',
+            'windows-latest',
+            'macos-latest'
+          ]
+        pact_tool: 
+          [
+            'docker',
+            'ruby_cli',
+            'ruby_standalone'
+          ]
+        node-version: 
+          [
+            18.x,
+            20.x
+          ]
         pact_provider:
           [
             "pactflow-example-bi-directional-provider-dredd",
@@ -79,7 +93,7 @@ jobs:
         uses: ruby/setup-ruby@v1 
         if: ${{ (env.PACT_TOOL == 'ruby_cli' || env.PACT_TOOL == 'ruby_standalone') && runner.os == 'Linux' }}
         with:
-          ruby-version: 2.7
+          ruby-version: 3.3
           bundler: none
       # we add a fallback for windows/darwin runners as they cannot run docker
       - name: 🔧 install-pact-ruby-cli (also runs for macOS/docker) 

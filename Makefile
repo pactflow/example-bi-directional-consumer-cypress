@@ -190,13 +190,13 @@ uninstall-pact-ruby-cli:
 
 install-pact-ruby-standalone:
 	case "${detected_OS}" in \
-	Windows|MSYS) curl -LO https://github.com/pact-foundation/pact-ruby-standalone/releases/download/v${PACT_CLI_STANDALONE_VERSION}/pact-${PACT_CLI_STANDALONE_VERSION}-win32.zip && \
-		unzip pact-${PACT_CLI_STANDALONE_VERSION}-win32.zip && \
+	Windows|MSYS) curl -LO https://github.com/pact-foundation/pact-ruby-standalone/releases/download/v${PACT_CLI_STANDALONE_VERSION}/pact-${PACT_CLI_STANDALONE_VERSION}-windows-x86_64.zip && \
+		unzip pact-${PACT_CLI_STANDALONE_VERSION}-windows-x86_64.zip && \
 		./pact/bin/pact-mock-service.bat --help && \
 		./pact/bin/pact-provider-verifier.bat --help && \
 		./pact/bin/pactflow.bat help;; \
-	Darwin) curl -LO https://github.com/pact-foundation/pact-ruby-standalone/releases/download/v${PACT_CLI_STANDALONE_VERSION}/pact-${PACT_CLI_STANDALONE_VERSION}-osx.tar.gz && \
-		tar xzf pact-${PACT_CLI_STANDALONE_VERSION}-osx.tar.gz && \
+	Darwin) curl -LO https://github.com/pact-foundation/pact-ruby-standalone/releases/download/v${PACT_CLI_STANDALONE_VERSION}/pact-${PACT_CLI_STANDALONE_VERSION}-osx-x86_64.tar.gz && \
+		tar xzf pact-${PACT_CLI_STANDALONE_VERSION}-osx-x86_64.tar.gz && \
 		./pact/bin/pact-mock-service --help && \
 		./pact/bin/pact-provider-verifier --help && \
 		./pact/bin/pactflow help;; \
