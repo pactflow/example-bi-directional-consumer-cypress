@@ -48,7 +48,8 @@ publish_pacts: .env
 ## Build/test tasks
 ## =====================
 
-install: npm install 
+install: 
+	npm install 
 
 test: .env
 	@echo "\n========== STAGE: test ✅ (cypress) ==========\n"
