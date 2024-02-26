@@ -17,6 +17,8 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
+    "lint:fix": "eslint . --fix",
+    "lint:verify": "eslint .",
     "test": "cross-env CI=true react-scripts test",
     "eject": "react-scripts eject",
     "cypress:open": "cypress open",
