@@ -146,7 +146,7 @@ SHELL := /bin/bash
 PACT_TOOL?=docker
 PACT_CLI_DOCKER_VERSION?=latest
 PACT_CLI_VERSION?=latest
-PACT_CLI_STANDALONE_VERSION?=1.89.00
+PACT_CLI_STANDALONE_VERSION?=2.4.1
 PACT_CLI_DOCKER_RUN_COMMAND?=docker run --rm -v /${PWD}:/${PWD} -w ${PWD} -e PACT_BROKER_BASE_URL -e PACT_BROKER_TOKEN pactfoundation/pact-cli:${PACT_CLI_DOCKER_VERSION}
 PACT_BROKER_COMMAND=pact-broker
 PACTFLOW_CLI_COMMAND=pactflow
@@ -154,7 +154,7 @@ PACTFLOW_CLI_COMMAND=pactflow
 ifeq '$(findstring ;,$(PATH))' ';'
 	detected_OS := Windows
 else
-	detected_OS := $(shell uname 2>/dev/null || echo Unknown)
+	detected_OS := $(shell uname -sm 2>/dev/null || echo Unknown)
 	detected_OS := $(patsubst CYGWIN%,Cygwin,$(detected_OS))
 	detected_OS := $(patsubst MSYS%,MSYS,$(detected_OS))
 	detected_OS := $(patsubst MINGW%,MSYS,$(detected_OS))
@@ -195,12 +195,22 @@ install-pact-ruby-standalone:
 		./pact/bin/pact-mock-service.bat --help && \
 		./pact/bin/pact-provider-verifier.bat --help && \
 		./pact/bin/pactflow.bat help;; \
-	Darwin) curl -LO https://github.com/pact-foundation/pact-ruby-standalone/releases/download/v${PACT_CLI_STANDALONE_VERSION}/pact-${PACT_CLI_STANDALONE_VERSION}-osx-x86_64.tar.gz && \
+	"Darwin arm64") curl -LO https://github.com/pact-foundation/pact-ruby-standalone/releases/download/v${PACT_CLI_STANDALONE_VERSION}/pact-${PACT_CLI_STANDALONE_VERSION}-osx-arm64.tar.gz && \
+		tar xzf pact-${PACT_CLI_STANDALONE_VERSION}-osx-arm64.tar.gz && \
+		./pact/bin/pact-mock-service --help && \
+		./pact/bin/pact-provider-verifier --help && \
+		./pact/bin/pactflow help;; \
+	"Darwin x86_64") curl -LO https://github.com/pact-foundation/pact-ruby-standalone/releases/download/v${PACT_CLI_STANDALONE_VERSION}/pact-${PACT_CLI_STANDALONE_VERSION}-osx-x86_64.tar.gz && \
 		tar xzf pact-${PACT_CLI_STANDALONE_VERSION}-osx-x86_64.tar.gz && \
 		./pact/bin/pact-mock-service --help && \
 		./pact/bin/pact-provider-verifier --help && \
 		./pact/bin/pactflow help;; \
-	Linux) curl -LO https://github.com/pact-foundation/pact-ruby-standalone/releases/download/v${PACT_CLI_STANDALONE_VERSION}/pact-${PACT_CLI_STANDALONE_VERSION}-linux-x86_64.tar.gz && \
+	"Linux aarch64") curl -LO https://github.com/pact-foundation/pact-ruby-standalone/releases/download/v${PACT_CLI_STANDALONE_VERSION}/pact-${PACT_CLI_STANDALONE_VERSION}-linux-arm64.tar.gz && \
+		tar xzf pact-${PACT_CLI_STANDALONE_VERSION}-linux-arm64.tar.gz && \
+		./pact/bin/pact-mock-service --help && \
+		./pact/bin/pact-provider-verifier --help && \
+		./pact/bin/pactflow help;; \
+	"Linux x86_64") curl -LO https://github.com/pact-foundation/pact-ruby-standalone/releases/download/v${PACT_CLI_STANDALONE_VERSION}/pact-${PACT_CLI_STANDALONE_VERSION}-linux-x86_64.tar.gz && \
 		tar xzf pact-${PACT_CLI_STANDALONE_VERSION}-linux-x86_64.tar.gz && \
 		./pact/bin/pact-mock-service --help && \
 		./pact/bin/pact-provider-verifier --help && \
