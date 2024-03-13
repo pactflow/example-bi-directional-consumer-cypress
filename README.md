@@ -8,7 +8,7 @@
   - [Overview of Example](#overview-of-example)
     - [Key points with Cypress](#key-points-with-cypress)
   - [Overview of Part of Bi-Directional Contract Testing Flow](#overview-of-part-of-bi-directional-contract-testing-flow)
-  - [Compatible with Providers](#compatibile-with-providers)
+  - [Compatible with Providers](#compatible-with-providers)
   - [Pre-requisites](#pre-requisites)
     - [Environment variables](#environment-variables)
   - [Usage](#usage)
@@ -108,11 +108,11 @@ NOTE: Cypress tests are located in `./cypress/e2e`. See below for how to start c
 
 Run each step separately
 
-- `make test_and_publish` - tests the provider and publishes provider contracts to PactFlow
+- `make test_and_publish` - tests the consumer and publishes pact contracts to PactFlow
   - This will perform the following 2 calls
     - `make test`
-    - `make publish_provider_contract`
-- `make can_i_deploy` - runs can-i-deploy to check if its safe to deploy the provider
+    - `make publish_pacts`
+- `make can_i_deploy` - runs can-i-deploy to check if its safe to deploy the consumer
 - `make deploy` - deploys the app and records deployment
 
 or run the whole lot in one go
