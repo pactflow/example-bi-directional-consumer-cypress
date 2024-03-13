@@ -1,59 +1,50 @@
-import axios from 'axios'
-import adapter from 'axios/lib/adapters/http'
-import { Product } from './product'
-
-axios.defaults.adapter = adapter
+import axios from 'axios';
+import { Product } from './product';
 
 export class API {
   constructor(url) {
-    if (url === undefined || url === '') {
-      url = process.env.REACT_APP_API_BASE_URL
+    if (!url) {
+      url = process.env.REACT_APP_API_BASE_URL || 'http://localhost:3001';
     } else if (url.endsWith('/')) {
-      url = url.substr(0, url.length - 1)
+      url = url.slice(0, -1);
     }
-    this.url = url
+    this.url = url;
   }
 
   withPath(path) {
     if (!path.startsWith('/')) {
-      path = '/' + path
+      path = '/' + path;
     }
-    return `${this.url}${path}`
+    return `${this.url}${path}`;
   }
 
   generateAuthToken() {
-    return 'Bearer ' + new Date().toISOString()
+    // Consider using a more secure token generation mechanism
+    return 'Bearer ' + new Date().toISOString();
   }
 
   async getAllProducts(id) {
-    if (id) {
-      return axios
-        .get(this.withPath('/products?id=' + id), {
-          headers: {
-            Authorization: this.generateAuthToken()
-          }
-        })
-        .then((r) => r.data.map((p) => new Product(p)))
-    } else {
-      return axios
-        .get(this.withPath('/products'), {
-          headers: {
-            Authorization: this.generateAuthToken()
-          }
-        })
-        .then((r) => r.data.map((p) => new Product(p)))
-    }
+    const url = id
+      ? this.withPath(`/products?id=${id}`)
+      : this.withPath('/products');
+
+      const { data } = await axios.get(url, {
+        headers: {
+          Authorization: this.generateAuthToken(),
+        },
+      });
+      return data.map((p) => new Product(p));
   }
 
   async getProduct(id) {
-    return axios
-      .get(this.withPath('/product/' + id), {
+    const url = this.withPath(`/product/${id}`);
+      const { data } = await axios.get(url, {
         headers: {
-          Authorization: this.generateAuthToken()
-        }
-      })
-      .then((r) => new Product(r.data))
+          Authorization: this.generateAuthToken(),
+        },
+      });
+      return new Product(data);
   }
 }
 
-export default new API(process.env.REACT_APP_API_BASE_URL || 'http://localhost:3001')
+export default new API();

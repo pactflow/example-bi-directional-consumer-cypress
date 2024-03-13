@@ -2,13 +2,13 @@
 
 [![Build](https://github.com/pactflow/example-bi-directional-consumer-cypress/actions/workflows/build.yml/badge.svg)](https://github.com/pactflow/example-bi-directional-consumer-cypress/actions/workflows/build.yml)
 
-[![Can I deploy Status](https://testdemo.pactflow.io/pacticipants/pactflow-example-bi-directional-consumer-cypress/branches/main/latest-version/can-i-deploy/to-environment/production/badge)](https://testdemo.pactflow.io/pacticipants/pactflow-example-bi-directional-consumer-cypress/branches/main/latest-version/can-i-deploy/to-environment/production/badge)
+[![Can I Deploy Status](https://testdemo.pactflow.io/pacticipants/pactflow-example-bi-directional-consumer-cypress/branches/main/latest-version/can-i-deploy/to-environment/production/badge)](https://testdemo.pactflow.io/pacticipants/pactflow-example-bi-directional-consumer-cypress/branches/main/latest-version/can-i-deploy/to-environment/production/badge)
 
 - [Example NodeJS/React Consumer - Cypress (BYO Adapter)](#example-nodejsreact-consumer---cypress-byo-adapter)
   - [Overview of Example](#overview-of-example)
     - [Key points with Cypress](#key-points-with-cypress)
   - [Overview of Part of Bi-Directional Contract Testing Flow](#overview-of-part-of-bi-directional-contract-testing-flow)
-  - [Compatibile with Providers](#compatibile-with-providers)
+  - [Compatible with Providers](#compatibile-with-providers)
   - [Pre-requisites](#pre-requisites)
     - [Environment variables](#environment-variables)
   - [Usage](#usage)
@@ -35,7 +35,7 @@ See the full [PactFlow Bi-Directional Workshop](https://docs.pactflow.io/docs/wo
 
 It:
 
-- It a React app implementing a "Product" website created with Create React App
+- It is a React app implementing a "Product" website created with Create React App
 - It utilises Cypress to functionally test the website
 - It utilises [pact-cypress-adapter](https://www.npmjs.com/package/@pactflow/pact-cypress-adapter) to transform cypress mocks into Pact consumer contracts.
 
@@ -63,7 +63,7 @@ When you run the CI pipeline (see below for doing this), the pipeline should per
 
 ![Consumer Pipeline](docs./../docs/consumer-pipeline.png 'Consumer Pipeline')
 
-## Compatibile with Providers
+## Compatible with Providers
 
 <!-- Provider Compatability -->
 
@@ -81,7 +81,7 @@ See [Environment variables](#environment-variables) on how to set these up.
 **Software**:
 
 - Tools listed at: https://docs.pactflow.io/docs/workshops/ci-cd/set-up-ci/prerequisites/
-- A pactflow.io account with an valid [API token](https://docs.pactflow.io/docs/getting-started/#configuring-your-api-token)
+- A pactflow.io account with a valid [API token](https://docs.pactflow.io/docs/getting-started/#configuring-your-api-token)
 
 ### Environment variables
 
@@ -102,7 +102,7 @@ Set `PACT_PROVIDER` to one of the following
 
 ### Steps
 
-NOTE: Cypress tests are located in `./cypress/integration`. See below for how to start cypress test, generate consumer contract and publish contract to pactflow.
+NOTE: Cypress tests are located in `./cypress/e2e`. See below for how to start cypress test, generate a consumer contract, and publish the contract to pactflow.
 
 - `make install` - install project dependencies
 
@@ -121,7 +121,7 @@ or run the whole lot in one go
 
 Installing alternate pact CLI tools.
 
-If you don't have docker, you can use one of the ruby tools. The standalone, doesn't require that you install Ruby on your host machine.
+If you don't have docker, you can use one of the ruby tools. The standalone doesn't require that you install Ruby on your host machine.
 
 - `make install-pact-ruby-cli` - installs the pact ruby CLI tool
 - `make install-pact-ruby-standalone` - installs the pact standalone CLI depending on your platform
@@ -136,14 +136,14 @@ Using alternate pact CLI tools.
 _How to use Cypress_
 
 - Spin up the ui project by running `npm run start`
-- Define your pact provider and consumer name at `cypress.json` as cypress environment variables
-- You can stub your network request and response with `cy.intercept`, and record network call to a consumer driven contract with `cy.usePactWait`. Each request you want to add to the contract must call this method.
+- Define your pact provider and consumer name at `cypress.config.cjs` as cypress environment variables
+- You can stub your network request and response with `cy.intercept`, and record network call to a consumer-driven contract with `cy.usePactWait`. Each request you want to add to the contract must call this method.
 - `npm run cypress:headless:chrome` - this will run cypress e2e test in headless mode, and write stubbed network calls a pact file
 - `npm run cypress:run` - this will run cypress e2e test with browser ui
 
 ## OS/Platform specific considerations
 
-The makefile has been configured to run on Unix/Windows and MacOS based systems, and tested against Github Actions
+The Makefile has been configured to run on Unix/Windows and MacOS-based systems, and tested against GitHub Actions
 
 They can be run locally on Unix/Windows and MacOS, or on Windows via [WSL2](https://docs.microsoft.com/en-us/windows/wsl/install) or a shell with bash.
 
@@ -162,4 +162,4 @@ They can be run locally on Unix/Windows and MacOS, or on Windows via [WSL2](http
 
 ## Found an issue?
 
-Reach out via a GitHub Issue, or reach us over in the [Pact foundation Slack](https://slack.pact.io)
+Reach out via a GitHub Issue, or reach us over in the [Pact Foundation Slack](https://slack.pact.io)

@@ -1,7 +1,7 @@
 {
   "settings": {
     "react": {
-      "version": "16.12.0"
+      "version": "18.2.0"
     }
   },
   "env": {
@@ -24,7 +24,7 @@
     "ecmaFeatures": {
       "jsx": true
     },
-    "ecmaVersion": 2018,
+    "ecmaVersion": 2023,
     "sourceType": "module"
   },
   "plugins": [

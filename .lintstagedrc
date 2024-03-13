@@ -1,0 +1,4 @@
+{
+  "*.js": "eslint",
+  "package.json": "typesync ./package.json --silent"
+}
