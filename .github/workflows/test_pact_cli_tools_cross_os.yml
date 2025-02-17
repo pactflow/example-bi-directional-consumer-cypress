@@ -88,7 +88,7 @@ jobs:
       PACT_CLI_STANDALONE_VERSION: ${{ needs.setup.outputs.PACT_CLI_STANDALONE_VERSION}}
     steps:
       - name: ⬇️ Checkout Repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@ee0669bd1cc54295c223e0bb666b733df41de1c5 # v2
       - name: 🚨 Setup Ruby
         uses: ruby/setup-ruby@v1 
         if: ${{ (env.PACT_TOOL == 'ruby_cli' || env.PACT_TOOL == 'ruby_standalone') && runner.os == 'Linux' }}
@@ -106,7 +106,7 @@ jobs:
         if: ${{ env.PACT_TOOL == 'ruby_standalone' }}
         run: make install-pact-ruby-standalone
       - name: 👷 Setup Node
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@1a4442cacd436585916779262731d5b162bc6ec7 # v3
         with:
           node-version: ${{ matrix.node-version }}
       - name: 📦️ Install for ${{ matrix.pact_provider }}
