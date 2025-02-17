@@ -17,8 +17,8 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v3
+      - uses: actions/checkout@ee0669bd1cc54295c223e0bb666b733df41de1c5 # v2
+      - uses: actions/setup-node@1a4442cacd436585916779262731d5b162bc6ec7 # v3
         with:
           node-version: "18"
       - name: Install
@@ -33,7 +33,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: test
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@ee0669bd1cc54295c223e0bb666b733df41de1c5 # v2
       - name: Can I deploy?
         run: BRANCH=${GIT_REF:11} make can_i_deploy
 
@@ -42,7 +42,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: can-i-deploy
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@ee0669bd1cc54295c223e0bb666b733df41de1c5 # v2
       - name: Deploy
         run: BRANCH=${GIT_REF:11} make deploy
         # if: github.ref == 'refs/heads/main' # note this is set in our Makefile
