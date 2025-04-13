@@ -64,6 +64,6 @@
     "husky": "9.1.7",
     "lint-staged": "15.5.0",
     "start-server-and-test": "2.0.11",
-    "typesync": "0.14.1"
+    "typesync": "0.14.2"
   }
 }
