@@ -93,7 +93,7 @@ jobs:
         uses: ruby/setup-ruby@v1 
         if: ${{ (env.PACT_TOOL == 'ruby_cli' || env.PACT_TOOL == 'ruby_standalone') && runner.os == 'Linux' }}
         with:
-          ruby-version: 3.4.8
+          ruby-version: 4.0.1
           bundler: none
       # we add a fallback for windows/darwin runners as they cannot run docker
       - name: 🔧 install-pact-ruby-cli (also runs for macOS/docker) 
