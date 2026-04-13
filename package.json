@@ -63,7 +63,7 @@
     "eslint-plugin-react-hooks": "7.0.1",
     "husky": "9.1.7",
     "lint-staged": "16.4.0",
-    "start-server-and-test": "3.0.0",
+    "start-server-and-test": "3.0.2",
     "typesync": "0.14.3"
   }
 }
